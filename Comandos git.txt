@@ -1,0 +1,6 @@
+git status (para revisar cambios en los archivos)
+git add archivo.txt (agregar un archivo especifico)
+git add . (agregar todos los archivos)
+git commint -m "mensaje" (para crear la version a subir)
+git pull (para descargar todo del repositorio)
+git push (para subir tus cambios al repositorio)
