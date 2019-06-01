@@ -4,3 +4,12 @@ git add . (agregar todos los archivos)
 git commint -m "mensaje" (para crear la version a subir)
 git pull (para descargar todo del repositorio)
 git push (para subir tus cambios al repositorio)
+
+<COMANDOS HOST Heroku>
+
+heroku git:remote -a perritubot (activar el control del host con git)
+git add . (lo mismo pero para el host)
+git commit -am "mensaje" (hacer un commit para el host)
+git push heroku master (hacer un push al host)
+heroku logs -a perritubot (para ver si hubo errores al subir cambios)
+
