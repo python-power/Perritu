@@ -4,6 +4,7 @@ import youtube_dl
 import urllib.parse
 import urllib.request
 from discord.ext import commands
+from ytdl import YTDLSource
 
 client = commands.Bot(command_prefix = '_')
 client.remove_command('help')
@@ -11,6 +12,11 @@ archivo = open("C:/hello.txt", "r")
 for linea in archivo.readlines():
     TOKEN= linea
 archivo.close()
+
+@client.event
+async def on_command_error(error, ctx):
+	print(error)
+	await error.send("pero loco escribe algo xd")
 
 @client.event
 async def on_ready():
@@ -33,15 +39,10 @@ async def help(ctx):
 	embed.add_field(name='_di', value='Digo lo que quieras :v', inline=True)
 
 	await ctx.send(embed=embed)
-	
+
 @client.command()
 async def play(ctx, *, cancion, channel: discord.VoiceChannel=None):
 
-	query_string = urllib.parse.urlencode({"search_query" : cancion})
-	html_content = urllib.request.urlopen("http://www.youtube.com/results?" + query_string)
-	search_results = re.findall(r'href=\"\/watch\?v=(.{11})', html_content.read().decode())
-	url = ("http://www.youtube.com/watch?v=" + search_results[0])
-	
 	try:
 		channel = ctx.author.voice.channel
 	except:
@@ -49,8 +50,11 @@ async def play(ctx, *, cancion, channel: discord.VoiceChannel=None):
 		
 	try:
 		vc = await channel.connect()
-		vc.play(discord.FFmpegPCMAudio("Prueba.mp3"), after=lambda e: print('done', e))
+		async with ctx.typing():
+			player = await YTDLSource.from_url(cancion, loop=client.loop, stream=True)
+			ctx.voice_client.play(player, after=lambda e: print("error") if e else None)
 		await ctx.message.add_reaction(emoji="▶")
+		await ctx.send('Now playing: **{}**'.format(cancion))
 	except:
 		await ctx.send("Pero maldito loco a donde tu quiere que yo entre? :rolling_eyes:")
 		
@@ -63,8 +67,9 @@ async def pause():
 	pass
 
 @client.command()
-async def stop(ctx, *, channel: discord.VoiceChannel=None):
-	pass
+async def stop(ctx):
+	await ctx.send("Na' hablamos orita :v")
+	await ctx.voice_client.disconnect()
 
 @client.command()
 async def resume():
