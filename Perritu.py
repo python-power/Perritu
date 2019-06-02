@@ -8,5 +8,9 @@ TOKEN = 'NDYyNDU2MTEwNTk1NDQwNjUw.XPKnfA.Bx4S2NwjMNsbiqCPQH_ukmcTjsI'
 async def on_ready():
 	print("Perritu esta listo para carrear!")
 	await client.change_presence(activity=discord.Game(name='a ser un gato'))
+	
+@client.command()
+async def xd(ctx):
+	await ctx.send("klk")
 
 client.run(TOKEN)
