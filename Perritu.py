@@ -8,7 +8,7 @@ from ytdl import YTDLSource
 
 client = commands.Bot(command_prefix = '_')
 client.remove_command('help')
-archivo = open("C:/hello.txt", "r") 
+archivo = open("hello.txt", "r") 
 for linea in archivo.readlines():
     TOKEN= linea
 archivo.close()
