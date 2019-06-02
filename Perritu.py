@@ -33,9 +33,8 @@ async def help(ctx):
 	await ctx.send(embed=embed)
 
 @client.command()
-async def di(ctx, msj):
-	mensaje_completo= "'"+msj+"'"
-	await ctx.send(mensaje_completo)
+async def di(ctx,*, msj):
+	await ctx.send(msj)
 	
 	
 client.run(TOKEN)
