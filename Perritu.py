@@ -15,8 +15,7 @@ async def on_ready():
 	await client.change_presence(activity=discord.Game(name='a ser un gato'))
 	
 @client.command()
-async def xd(ctx):
-	await ctx.send("klk")
+async def help(ctx):
 	embed = discord.Embed(
 		colour = discord.Colour.dark_purple()
 	)
