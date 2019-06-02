@@ -3,7 +3,11 @@ from discord.ext import commands
 
 client = commands.Bot(command_prefix = '_')
 client.remove_command('help')
-TOKEN = 'NDYyNDU2MTEwNTk1NDQwNjUw.XPKnfA.Bx4S2NwjMNsbiqCPQH_ukmcTjsI'
+archivo = open("C:/hello.txt", "r") 
+for linea in archivo.readlines():
+    TOKEN= linea
+archivo.close()
+
 	
 @client.event
 async def on_ready():
@@ -11,7 +15,7 @@ async def on_ready():
 	await client.change_presence(activity=discord.Game(name='a ser un gato'))
 	
 @client.command()
-async def help(ctx):
+async def xd(ctx):
 	await ctx.send("klk")
 	embed = discord.Embed(
 		colour = discord.Colour.dark_purple()
@@ -32,6 +36,6 @@ async def help(ctx):
 @client.command()
 async def play(ctx, cancion):
 	ch=client.get_channel(462469511124353028)
-	ch.connect()
+	
 	
 client.run(TOKEN)
