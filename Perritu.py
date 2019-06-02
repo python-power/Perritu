@@ -1,4 +1,8 @@
 import discord
+import re
+import youtube_dl
+import urllib.parse
+import urllib.request
 from discord.ext import commands
 
 client = commands.Bot(command_prefix = '_')
@@ -8,7 +12,6 @@ for linea in archivo.readlines():
     TOKEN= linea
 archivo.close()
 
-	
 @client.event
 async def on_ready():
 	print("Perritu esta listo para carrear!")
@@ -32,7 +35,12 @@ async def help(ctx):
 	await ctx.send(embed=embed)
 	
 @client.command()
-async def play(ctx, *, channel: discord.VoiceChannel=None):
+async def play(ctx, *, cancion, channel: discord.VoiceChannel=None):
+
+	query_string = urllib.parse.urlencode({"search_query" : cancion})
+	html_content = urllib.request.urlopen("http://www.youtube.com/results?" + query_string)
+	search_results = re.findall(r'href=\"\/watch\?v=(.{11})', html_content.read().decode())
+	url = ("http://www.youtube.com/watch?v=" + search_results[0])
 	
 	try:
 		channel = ctx.author.voice.channel
@@ -40,9 +48,12 @@ async def play(ctx, *, channel: discord.VoiceChannel=None):
 		print("No hay canal de voz al cual unirse")
 		
 	try:
-		await channel.connect()
+		vc = await channel.connect()
+		vc.play(discord.FFmpegPCMAudio("Prueba.mp3"), after=lambda e: print('done', e))
+		await ctx.message.add_reaction(emoji="▶")
 	except:
 		await ctx.send("Pero maldito loco a donde tu quiere que yo entre? :rolling_eyes:")
+		
 @client.command()
 async def queue():
 	pass
@@ -52,7 +63,7 @@ async def pause():
 	pass
 
 @client.command()
-async def stop():
+async def stop(ctx, *, channel: discord.VoiceChannel=None):
 	pass
 
 @client.command()
@@ -62,7 +73,5 @@ async def resume():
 @client.command()
 async def di(ctx,*, msj):
 	await ctx.send("**"+msj+"**")
-	await ctx.message.add_reaction(emoji=":open_mouth:")
-	
 	
 client.run(TOKEN)
