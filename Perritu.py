@@ -20,7 +20,7 @@ async def help(ctx):
 		colour = discord.Colour.dark_purple()
 	)
 
-	embed.set_author(name='Como tu ere'+"'"+' bruto aqui te digo como usarme :v')
+	embed.set_author(name="Como tu ere' bruto aqui te digo como usarme :v")
 	embed.add_field(name='_perritu', value='Si estan tan aburrido, puedes hablarme con este comando :dog:', inline=False)
 	embed.add_field(name='_play',  value='Pongo esa canción', inline=True)
 	embed.add_field(name='_queue', value='Pongo es canción en cola', inline=True)
