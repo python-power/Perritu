@@ -46,7 +46,7 @@ async def play(ctx, *, cancion, channel: discord.VoiceChannel=None):
 	try:
 		channel = ctx.author.voice.channel
 	except:
-		print("No hay canal de voz al cual unirse")
+		await ctx.send("Pero maldito loco a donde tu quiere que yo entre? :rolling_eyes:")
 		
 	try:
 		vc = await channel.connect()
@@ -56,7 +56,7 @@ async def play(ctx, *, cancion, channel: discord.VoiceChannel=None):
 		await ctx.message.add_reaction(emoji="▶")
 		await ctx.send('Now playing: **{}**'.format(cancion))
 	except:
-		await ctx.send("Pero maldito loco a donde tu quiere que yo entre? :rolling_eyes:")
+		print("No hay canal de voz al cual unirse")
 		
 @client.command()
 async def queue():
