@@ -38,6 +38,7 @@ async def play(ctx, *, channel: discord.VoiceChannel=None):
 		try:
 			channel = ctx.author.voice.channel
 		except AttributeError:
+			ctx.send("y ese genjutsu entra tu primero :v")
 			raise InvalidVoiceChannel('No channel to join. Please either specify a valid channel or join one.')
 	
 	vc = ctx.voice_client
@@ -48,12 +49,14 @@ async def play(ctx, *, channel: discord.VoiceChannel=None):
 		try:
 			await vc.move_to(channel)
 		except asyncio.TimeoutError:
+			ctx.send("Es que estoy cansado, hagamolos de nuevo :v")
 			raise VoiceConnectionError(f'Moving to channel: <{channel}> time out.')
 	
 	else:
 		try:
 			await channel.connect()
 		except asyncio.TimeoutError:
+			ctx.send("Es que estoy cansado, hagamolos de nuevo :v")
 			raise VoiceConnectionError(f'Connecting to channel: <{channel}> time out.')
 	
 	
@@ -62,7 +65,4 @@ async def play(ctx, *, channel: discord.VoiceChannel=None):
 async def di(ctx,*, msj):
 	await ctx.send("**"+msj+"**")
 	
-
-
-
 client.run(TOKEN)
