@@ -31,6 +31,32 @@ async def help(ctx):
 	embed.add_field(name='_di', value='Digo lo que quieras :v', inline=True)
 
 	await ctx.send(embed=embed)
+	
+@client.command()
+async def play(ctx, *, channel: discord.VoiceChannel=None):
+	if not channel:
+		try:
+			channel = ctx.author.voice.channel
+		except AttributeError:
+			raise InvalidVoiceChannel('No channel to join. Please either specify a valid channel or join one.')
+	
+	vc = ctx.voice_client
+	
+	if vc:
+		if vc.channel.id == channel.id:
+			return
+		try:
+			await vc.move_to(channel)
+		except asyncio.TimeoutError:
+			raise VoiceConnectionError(f'Moving to channel: <{channel}> time out.')
+	
+	else:
+		try:
+			await channel.connect()
+		except asyncio.TimeoutError:
+			raise VoiceConnectionError(f'Connecting to channel: <{channel}> time out.')
+	
+	
 
 @client.command()
 async def di(ctx,*, msj):
