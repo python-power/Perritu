@@ -25,7 +25,6 @@ async def help(ctx):
 	embed.add_field(name='_play',  value='Pongo esa canción', inline=True)
 	embed.add_field(name='_queue', value='Pongo es canción en cola', inline=True)
 	embed.add_field(name='_stop', value='Quito la musica', inline=True)
-	embed.add_field(name='_vete', value='Me voy de la llamada', inline=True)
 	embed.add_field(name='_pause', value='Pauso la musica', inline=True)
 	embed.add_field(name='_resume', value='Quito la pausa', inline=True)
 	embed.add_field(name='_di', value='Digo lo que quieras :v', inline=True)
@@ -40,15 +39,25 @@ async def play(ctx, *, channel: discord.VoiceChannel=None):
 	except:
 		print("No hay canal de voz al cual unirse")
 		
-	vc = ctx.voice_client
 	try:
 		await channel.connect()
 	except:
 		await ctx.send("Pero maldito loco a donde tu quiere que yo entre? :rolling_eyes:")
-		
+@client.command()
+async def queue():
+	pass
+
+@client.command()
+async def pause():
+	pass
+
 @client.command()
 async def stop():
 	pass
+
+@client.command()
+async def resume():
+	pass			
 
 @client.command()
 async def di(ctx,*, msj):
