@@ -34,33 +34,26 @@ async def help(ctx):
 	
 @client.command()
 async def play(ctx, *, channel: discord.VoiceChannel=None):
-	if not channel:
-		try:
-			channel = ctx.author.voice.channel
-		except AttributeError:
-			raise InvalidVoiceChannel('No channel to join. Please either specify a valid channel or join one.')
 	
+	try:
+		channel = ctx.author.voice.channel
+	except:
+		print("No hay canal de voz al cual unirse")
+		
 	vc = ctx.voice_client
-	
-	if vc:
-		if vc.channel.id == channel.id:
-			return
-		try:
-			await vc.move_to(channel)
-		except asyncio.TimeoutError:
-			raise VoiceConnectionError(f'Moving to channel: <{channel}> time out.')
-	
-	else:
-		try:
-			await channel.connect()
-		except asyncio.TimeoutError:
-			raise VoiceConnectionError(f'Connecting to channel: <{channel}> time out.')
-	
+	try:
+		await channel.connect()
+	except:
+		await ctx.send("Pero maldito loco a donde tu quiere que yo entre? :rolling_eyes:")
+		
+@client.command()
+async def stop():
 	
 
 @client.command()
 async def di(ctx,*, msj):
 	await ctx.send("**"+msj+"**")
+	await ctx.message.add_reaction(emoji=":open_mouth:")
 	
 	
 client.run(TOKEN)
