@@ -13,4 +13,9 @@ async def on_ready():
 async def xd(ctx):
 	await ctx.send("klk")
 
+@client.command()
+async def play(ctx, cancion):
+	ch=client.get_channel(462469511124353028)
+	ch.connect()
+	
 client.run(TOKEN)
