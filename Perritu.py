@@ -48,7 +48,7 @@ async def play(ctx, *, channel: discord.VoiceChannel=None):
 		
 @client.command()
 async def stop():
-	
+	pass
 
 @client.command()
 async def di(ctx,*, msj):
