@@ -34,7 +34,7 @@ async def help(ctx):
 
 @client.command()
 async def di(ctx,*, msj):
-	await ctx.send(msj)
+	await ctx.send("**"+msj+"**")
 	
 	
 client.run(TOKEN)
