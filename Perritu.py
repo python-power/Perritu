@@ -14,7 +14,7 @@ async def on_ready():
 	print("Perritu esta listo para carrear!")
 	await client.change_presence(activity=discord.Game(name='a ser un gato'))
 	
-@client.command()
+@client.command()	
 async def help(ctx):
 	embed = discord.Embed(
 		colour = discord.Colour.dark_purple()
@@ -33,8 +33,8 @@ async def help(ctx):
 	await ctx.send(embed=embed)
 
 @client.command()
-async def play(ctx, cancion):
-	ch=client.get_channel(462469511124353028)
+async def di(ctx, msj):
+	await ctx.send("'"+msj+"'")
 	
 	
 client.run(TOKEN)
