@@ -8,7 +8,7 @@ from ytdl import YTDLSource
 
 client = commands.Bot(command_prefix = '_')
 client.remove_command('help')
-archivo = open("C:\hello.txt", "r") 
+archivo = open("hello.txt", "r") 
 for linea in archivo.readlines():
     TOKEN= linea
 archivo.close()
@@ -54,13 +54,34 @@ async def play(ctx, *, cancion, channel: discord.VoiceChannel=None):
 			player = await YTDLSource.from_url(cancion, loop=client.loop, stream=True)
 			ctx.voice_client.play(player, after=lambda e: print("error") if e else None)
 		await ctx.message.add_reaction(emoji="▶")
-		await ctx.send('Now playing: **{}**'.format(cancion))
+		await ctx.send('Esta sonando: **<{}>**'.format(cancion))
 	except:
 		print("No hay canal de voz al cual unirse")
-		
+
 @client.command()
-async def queue():
-	pass
+async def yt(ctx, *, cancion, channel: discord.VoiceChannel=None):
+	try:
+		channel = ctx.author.voice.channel
+	except:
+		await ctx.send("emm...")
+		
+	try:
+		vc = await channel.connect()
+		async with ctx.typing():
+			player = await YTDLSource.from_url(cancion, loop=client.loop)
+			ctx.voice_client.play(player, after=lambda e: print("error") if e else None)
+			
+		await ctx.send("Esta sonando: **{}**".format(player.title))
+	except:
+		print("emmm....")
+
+@client.command()
+async def volumen(ctx, volume: int):
+	if ctx.voice_client is None:
+		return await ctx.send("No estas conectado en un canal de voz :v")
+	
+	ctx.voice_client.source.volume = volume / 100
+	await ctx.send("Volumen cambiado a {}%".format(volume))
 
 @client.command()
 async def pause():
