@@ -49,31 +49,14 @@ async def play(ctx, *, cancion, channel: discord.VoiceChannel=None):
 		await ctx.send("Pero maldito loco a donde tu quiere que yo entre? :rolling_eyes:")
 		
 	try:
+		await ctx.message.add_reaction(emoji="▶")
 		vc = await channel.connect()
 		async with ctx.typing():
 			player = await YTDLSource.from_url(cancion, loop=client.loop, stream=True)
 			ctx.voice_client.play(player, after=lambda e: print("error") if e else None)
-		await ctx.message.add_reaction(emoji="▶")
-		await ctx.send('Esta sonando: **<{}>**'.format(cancion))
+		await ctx.send('Esta sonando: **{}**'.format(player.title))
 	except:
 		print("No hay canal de voz al cual unirse")
-
-@client.command()
-async def yt(ctx, *, cancion, channel: discord.VoiceChannel=None):
-	try:
-		channel = ctx.author.voice.channel
-	except:
-		await ctx.send("emm...")
-		
-	try:
-		vc = await channel.connect()
-		async with ctx.typing():
-			player = await YTDLSource.from_url(cancion, loop=client.loop)
-			ctx.voice_client.play(player, after=lambda e: print("error") if e else None)
-			
-		await ctx.send("Esta sonando: **{}**".format(player.title))
-	except:
-		print("emmm....")
 
 @client.command()
 async def volumen(ctx, volume: int):
@@ -89,6 +72,7 @@ async def pause():
 
 @client.command()
 async def stop(ctx):
+	await ctx.message.add_reaction(emoji="⏹")
 	await ctx.send("Na' hablamos orita :v")
 	await ctx.voice_client.disconnect()
 
